@@ -292,27 +292,30 @@ nav li {
 	margin: auto;
 }
 
-#contact>*,
-.login>* {
+.form-base>* {
 	text-align: center;
 
 }
 
-#contact h2,
-.login h2 {
+.form-base h2 {
 	margin-bottom: 20px;
 }
 
-#contact form,
-.login-form {
+.form-base form {
 	text-align: left;
 	margin-top: 30px;
 	display: flex;
 	flex-direction: column;
 }
 
-#contact input,
-.login-form input,
+.form-base span {
+	color: red;
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+
+.form-base input,
 .btn-form {
 	height: 50px;
 	font-size: 1.2em;
@@ -320,18 +323,16 @@ nav li {
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 
-#contact label,
-.login-form label {
+.form-base label {
 	margin: 2em 0 1em 0;
 }
 
-#contact textarea {
+.form-base textarea {
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 
-input[type="submit"],
-.btn-form {
+.form-base .submit {
 	font-family: 'Syne';
 	font-weight: 700;
 	color: white;
@@ -340,6 +341,11 @@ input[type="submit"],
 	width: 180px;
 	text-align: center;
 	border-radius: 60px;
+}
+
+
+.submit:hover {
+	background-color: #0E2F28;
 }
 
 .login a {
@@ -357,3 +363,5 @@ footer nav ul {
 	padding: 2em 0;
 	margin: 2em
 }
+
+/* Affichage connecté */
