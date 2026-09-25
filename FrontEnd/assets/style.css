@@ -109,6 +109,7 @@ section {
 
 body {
 	line-height: 1;
+	background-color: #FFFEF8;
 }
 
 ol,
@@ -187,8 +188,19 @@ nav li {
 	font-size: 1.2em;
 }
 
-li:hover {
+.lien-nav {
+	text-decoration: none;
+	color: #000;
+}
+
+.lien-nav:hover {
 	color: #B1663C;
+}
+
+.page-active {
+	color: #000;
+	font-weight: 600;
+
 }
 
 #introduction {
@@ -232,7 +244,7 @@ li:hover {
 
 }
 
-.btn-filters {
+.btn-filter {
 	display: block;
 	font-family: 'Syne';
 	color: #1D6154;
@@ -244,7 +256,7 @@ li:hover {
 	padding: 0 10px;
 }
 
-.select-filter {
+.active-filter {
 	color: white;
 	background-color: #1D6154;
 }
@@ -315,8 +327,16 @@ input[type="submit"] {
 	border-radius: 60px;
 }
 
+footer {
+	background-color: #FFFFFF;
+	padding: 2em 0;
+}
+
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
 	margin: 2em
 }
+
+
+/**************** PAGE LOGIN ********************/

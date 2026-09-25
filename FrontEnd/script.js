@@ -1,80 +1,95 @@
+const gallery = document.querySelector(".gallery");
+const filters = document.querySelector(".filters");
+const API = "http://localhost:5678/api";
 
+let allWorks = []
+let allCategories = []
 
-const reponse = await fetch("http://localhost:5678/api/works")
-const works = await reponse.json()
+const fetchData = async () => {
+    try {
+        const response = await fetch(`${API}/works`);
+        const works = await response.json();
+        allWorks = works;
+        console.log("la liste de works est ", allWorks);
+        afficheGallery(allWorks)
+    } catch (error) {
+        console.error("Erreur dans la récupération de works", error);
+    };
+}
+fetchData();
 
-
-
-const gallery = document.querySelector(".gallery")
 // Creer la gallery dynamique
 
-function afficheGallery(works) {
+const afficheGallery = (works) => {
     works.forEach(work => {
-        const img = document.createElement("img")
-        img.src = work.imageUrl
-        img.alt = `Une image du projet : ${work.title}`
-        const figcaption = document.createElement("figcaption")
-        figcaption.innerText = work.title
-        const figure = document.createElement("figure")
+        const figure = document.createElement("figure");
 
-        figure.appendChild(img)
-        figure.appendChild(figcaption)
-        gallery.appendChild(figure)
+        const img = document.createElement("img");
+        img.src = work.imageUrl;
+        img.alt = `Une image du projet : ${work.title}`;
+        figure.appendChild(img);
 
+        const figcaption = document.createElement("figcaption");
+        figcaption.innerText = work.title;
+        figure.appendChild(figcaption);
 
-
+        gallery.appendChild(figure);
     });
 }
 
-afficheGallery(works)
+///////////////// Creation les filtres dynamiques //////////////////////
 
-
-// Creer les filtres dynamiquement
-
-let categories = [{ id: "#", name: "Tous" }]
-
-// Creer la liste des filtres
-works.forEach(work => {
-    const category = work.category;
-
-    const exist = categories.some(
-        element => element.id === category.id
-    );
-    if (!exist) {
-        categories.push(category);
+// Recuperation des catégories
+const fetchCategories = async () => {
+    try {
+        const response = await fetch(`${API}/categories`);
+        const categories = await response.json();
+        categories.unshift({
+            id: 0,
+            name: 'Tous',
+        });
+        allCategories = categories;
+        createFilters(allCategories)
     }
-})
-const filters = document.querySelector(".filters")
-categories.forEach(cat => {
-    const button = document.createElement("button")
-    button.id = cat.id
-    button.innerText = cat.name
-    if (cat.id === "#") {
-        button.classList = "btn-filters select-filter"
-    } else {
-
-        button.classList = "btn-filters"
+    catch (error) {
+        console.error("Probleme de récupération des categories", error)
     }
-    filters.appendChild(button)
+}
+fetchCategories()
 
-    // Creation du filtrage
-    button.addEventListener("click", event => {
-
-        if (event.target.id === "#") {
-            gallery.innerHTML = ""
-            afficheGallery(works)
+// Creation de la liste des Filtres
+const createFilters = (listCategories) => {
+    listCategories.forEach(cat => {
+        const button = document.createElement("button")
+        button.id = cat.id
+        button.innerText = cat.name
+        if (cat.id === "0") {
+            button.classList = "btn-filter active-filter"
         } else {
-            let listFilter = works.filter(work => work.categoryId === Number(event.target.id))
-            console.log(works)
-            console.log(event.target.id, typeof event.target.id)
-            console.log(listFilter)
-            gallery.innerHTML = ""
-            afficheGallery(listFilter)
-
+            button.classList = "btn-filter"
         }
-        document.querySelector(".select-filter").classList.toggle("select-filter")
-        button.classList.toggle("select-filter")
+        filters.appendChild(button)
+    }
+    )
+}
+// Changement du Style des boutons quand le filtre change a l'ecoute des boutons
+const styleBtnActive = (button) => {
+    const allButtons = document.querySelectorAll(".btn-filter")
+    allButtons.forEach(button => {
+        button.classList.remove("active-filter")
     })
+    button.classList.add("active-filter")
+}
 
+// Ecoute des boutons Filters
+filters.addEventListener("click", event => {
+    styleBtnActive(event.target)
+    gallery.innerHTML = ""
+    if (event.target.id === "0") {
+        afficheGallery(allWorks)
+    } else {
+        let listFilterWorks = allWorks.filter(work => work.categoryId === Number(event.target.id))
+        afficheGallery(listFilterWorks)
+    }
 })
 
