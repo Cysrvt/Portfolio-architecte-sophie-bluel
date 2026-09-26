@@ -1,5 +1,6 @@
 const gallery = document.querySelector(".gallery");
 const filters = document.querySelector(".filters");
+const lienNavLogin = document.querySelector(".lien-nav-login")
 const API = "http://localhost:5678/api";
 
 let allWorks = []
@@ -93,3 +94,33 @@ filters.addEventListener("click", event => {
     }
 })
 
+const afficherEditMode = () => {
+    const editMode = document.querySelectorAll(".edit-mode")
+
+    editMode.forEach((element) => {
+        element.classList.toggle("open")
+    })
+}
+
+
+const afficherModeConnecte = () => {
+    const token = localStorage.getItem("token")
+
+    if (token) {
+        console.log("Utilisateur connecté")
+        lienNavLogin.innerText = "Logout"
+        afficherEditMode()
+    }
+}
+
+afficherModeConnecte()
+
+
+lienNavLogin.addEventListener("click", (event) => {
+    const token = localStorage.getItem("token")
+    if (token) {
+        event.preventDefault()
+        localStorage.removeItem("token")
+        window.location.reload()
+    }
+})

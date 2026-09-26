@@ -231,9 +231,21 @@ nav li {
 	margin-bottom: 0.5em;
 }
 
-#portfolio h2 {
-	text-align: center;
-	margin-bottom: 1em;
+
+.title-container {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 40px;
+}
+
+.modifier {
+	position: absolute;
+	left: 61%;
+
+	align-items: center;
+	gap: 10px;
 }
 
 .filters {
@@ -241,7 +253,7 @@ nav li {
 	justify-content: center;
 	gap: 10px;
 	height: 38px;
-	margin: 40px;
+	margin-bottom: 40px;
 
 }
 
@@ -365,3 +377,20 @@ footer nav ul {
 }
 
 /* Affichage connecté */
+
+.bandeau-edit-mode {
+	background-color: #000;
+	color: white;
+	height: 59px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.edit-mode {
+	display: none;
+}
+
+.edit-mode.open {
+	display: flex;
+}

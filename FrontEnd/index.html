@@ -9,19 +9,25 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap"
 		rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+		integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
 	<script type="module" src="script.js" defer></script>
 </head>
 
 <body>
+	<div class="bandeau-edit-mode edit-mode">
+		<p><i class="fa-regular fa-pen-to-square"></i> <span>Mode édition</span></p>
+	</div>
 	<header>
 		<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 		<nav>
 			<ul>
 				<li class="page-active">projets</li>
 				<li><a href="#" class="lien-nav">contact</a></li>
-				<li><a href="login.html" class="lien-nav login-page">login</a></li>
+				<li><a href="login.html" class="lien-nav lien-nav-login">login</a></li>
 				<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 			</ul>
 		</nav>
@@ -43,8 +49,15 @@
 			</article>
 		</section>
 		<section id="portfolio">
-			<h2>Mes Projets</h2>
-			<div class="filters">
+			<div class="title-container">
+				<h2>Mes Projets</h2>
+				<div class="modifier edit-mode">
+					<i class="fa-regular fa-pen-to-square"></i>
+					<span>modifier</span>
+				</div>
+			</div>
+
+			<div class="filters edit-mode open">
 
 			</div>
 			<div class="gallery">
