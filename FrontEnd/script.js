@@ -94,6 +94,10 @@ filters.addEventListener("click", event => {
     }
 })
 
+/////////////////// Affichage Mode Edition //////////////////
+
+
+//Affiche ou Désaffiche les balises concernées par le mode édition
 const afficherEditMode = () => {
     const editMode = document.querySelectorAll(".edit-mode")
 
@@ -102,10 +106,9 @@ const afficherEditMode = () => {
     })
 }
 
-
-const afficherModeConnecte = () => {
+// Regarde si y a un token, si oui, ca passe la page en mode edition
+const ModeConnecte = () => {
     const token = localStorage.getItem("token")
-
     if (token) {
         console.log("Utilisateur connecté")
         lienNavLogin.innerText = "Logout"
@@ -113,9 +116,11 @@ const afficherModeConnecte = () => {
     }
 }
 
-afficherModeConnecte()
+ModeConnecte()
 
-
+// Au click sur logout/login si y a un token 
+// ca l'enleve et rafraichi la page 
+// sinon la suit le lien normalement
 lienNavLogin.addEventListener("click", (event) => {
     const token = localStorage.getItem("token")
     if (token) {
