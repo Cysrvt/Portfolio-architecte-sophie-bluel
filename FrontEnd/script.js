@@ -13,6 +13,8 @@ const fetchData = async () => {
         allWorks = works;
         console.log("la liste de works est ", allWorks);
         afficheGallery(allWorks)
+
+        afficherGalleryModal(allWorks)
     } catch (error) {
         console.error("Erreur dans la récupération de works", error);
     };
@@ -120,7 +122,7 @@ ModeConnecte()
 
 // Au click sur logout/login si y a un token 
 // ca l'enleve et rafraichi la page 
-// sinon la suit le lien normalement
+// sinon ca suit le lien normalement
 lienNavLogin.addEventListener("click", (event) => {
     const token = localStorage.getItem("token")
     if (token) {
@@ -129,3 +131,51 @@ lienNavLogin.addEventListener("click", (event) => {
         window.location.reload()
     }
 })
+
+
+
+/////////////////////// MODALE ////////////////////////////////
+
+const modal = document.querySelector(".modal")
+const modifierElement = document.querySelector(".modifier")
+const modalCloseBtn = document.querySelector(".modal-close-btn")
+const galleryModal = document.querySelector(".modal-gallery")
+
+// Pour ouvrir la modale //
+const ouvrirModal = () => {
+    modal.classList.add("open")
+}
+modifierElement.addEventListener("click", ouvrirModal)
+
+// Pour fermer la modale //
+
+const fermerModal = () => {
+    modal.classList.remove("open")
+}
+// a la croix  
+modalCloseBtn.addEventListener("click", fermerModal)
+// au click de l'overlay
+modal.addEventListener("click", (event) => {
+    if (event.target === modal) {
+        fermerModal()
+    }
+})
+
+// Creation de la gallery pour la modale 
+const afficherGalleryModal = (works) => {
+    console.log("ma liste allworks est ", works)
+    works.forEach(work => {
+        const figure = document.createElement("figure");
+        const img = document.createElement("img");
+        img.src = work.imageUrl;
+        img.alt = `Une image du projet : ${work.title}`;
+        figure.appendChild(img);
+
+        const deleteBtn = document.createElement("button");
+        deleteBtn.classList = "delete-Btn"
+        deleteBtn.innerHTML = '<i class="fa-xs fa-solid fa-trash-can"></i>'
+
+        figure.appendChild(deleteBtn);
+        galleryModal.appendChild(figure);
+    });
+}
