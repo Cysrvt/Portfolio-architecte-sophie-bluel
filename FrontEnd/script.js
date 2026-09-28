@@ -6,7 +6,7 @@ const API = "http://localhost:5678/api";
 let allWorks = []
 let allCategories = []
 
-const fetchData = async () => {
+const fetchWorks = async () => {
     try {
         const response = await fetch(`${API}/works`);
         const works = await response.json();
@@ -15,11 +15,12 @@ const fetchData = async () => {
         afficheGallery(allWorks)
 
         afficherGalleryModal(allWorks)
+        clickDeleteBtn()
     } catch (error) {
         console.error("Erreur dans la récupération de works", error);
     };
 }
-fetchData();
+fetchWorks();
 
 // Creer la gallery dynamique
 
@@ -47,12 +48,16 @@ const fetchCategories = async () => {
     try {
         const response = await fetch(`${API}/categories`);
         const categories = await response.json();
+        //creation des option pour le select de la modale
+        createOptionSelect(categories)
+        //ajout du "tous" pour les filtres
         categories.unshift({
             id: 0,
             name: 'Tous',
         });
         allCategories = categories;
         createFilters(allCategories)
+
     }
     catch (error) {
         console.error("Probleme de récupération des categories", error)
@@ -88,7 +93,7 @@ const styleBtnActive = (button) => {
 filters.addEventListener("click", event => {
     styleBtnActive(event.target)
     gallery.innerHTML = ""
-    if (event.target.id === "0") {
+    if (event.target.id === 0) {
         afficheGallery(allWorks)
     } else {
         let listFilterWorks = allWorks.filter(work => work.categoryId === Number(event.target.id))
@@ -111,10 +116,16 @@ const afficherEditMode = () => {
 // Regarde si y a un token, si oui, ca passe la page en mode edition
 const ModeConnecte = () => {
     const token = localStorage.getItem("token")
+    const userId = localStorage.getItem("userId")
     if (token) {
         console.log("Utilisateur connecté")
+
+        console.log("ceci est mon token : ", token)
         lienNavLogin.innerText = "Logout"
         afficherEditMode()
+    }
+    if (userId) {
+        console.log("ceci est mon userId", userId)
     }
 }
 
@@ -140,6 +151,9 @@ const modal = document.querySelector(".modal")
 const modifierElement = document.querySelector(".modifier")
 const modalCloseBtn = document.querySelector(".modal-close-btn")
 const galleryModal = document.querySelector(".modal-gallery")
+const modalAddBtn = document.querySelector(".modal-add-btn")
+const modalReturnBtn = document.querySelector(".modal-return-btn")
+
 
 // Pour ouvrir la modale //
 const ouvrirModal = () => {
@@ -161,6 +175,19 @@ modal.addEventListener("click", (event) => {
     }
 })
 
+// Pour mettre en place les echanges apercu suivant les parties ouvertes
+const echangeAffichage = (classChange) => {
+    const allChanges = document.querySelectorAll(classChange)
+    allChanges.forEach((element) => {
+        element.classList.toggle("open")
+    })
+}
+modalAddBtn.addEventListener("click", () => echangeAffichage(".parties-modal"))
+modalReturnBtn.addEventListener("click", () => echangeAffichage(".parties-modal"))
+
+
+
+
 // Creation de la gallery pour la modale 
 const afficherGalleryModal = (works) => {
     console.log("ma liste allworks est ", works)
@@ -171,11 +198,84 @@ const afficherGalleryModal = (works) => {
         img.alt = `Une image du projet : ${work.title}`;
         figure.appendChild(img);
 
-        const deleteBtn = document.createElement("button");
-        deleteBtn.classList = "delete-Btn"
+        const deleteBtn = document.createElement("div");
+        deleteBtn.classList = "delete-btn"
+        deleteBtn.setAttribute('workid', work.id)
         deleteBtn.innerHTML = '<i class="fa-xs fa-solid fa-trash-can"></i>'
-
         figure.appendChild(deleteBtn);
         galleryModal.appendChild(figure);
     });
+
 }
+
+const deleteWork = async (workId) => {
+    let token = JSON.parse(window.localStorage.getItem("token"))
+
+    console.log("mon token", token)
+    try {
+        const response = await fetch(`${API}/works/${workId}`, {
+            method: 'DELETE',
+            headers: {
+                Accept: 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+        })
+        if (!response.ok) {
+            throw new Error(`Erreur http: ${response.status}`);
+        }
+        alert('Element supprimé');
+        gallery.innerHTML = "";
+        galleryModal.innerHTML = "";
+        fetchWorks();
+
+    } catch (error) {
+        console.error("Erreur lorsqu'on essaye de supprimer les works");
+    }
+}
+
+
+
+const clickDeleteBtn = () => {
+    const allDeleteBtns = document.querySelectorAll(".delete-btn")
+    allDeleteBtns.forEach(element => {
+        element.addEventListener("click", () => {
+            deleteWork(element.getAttribute("workid"))
+        }
+        )
+    }
+    )
+}
+
+
+/// creation option pour choix de catégorie au form modale
+
+const createOptionSelect = (options) => {
+    const selectElement = document.getElementById("categorie-select")
+    options.forEach(option => {
+        const optionElement = document.createElement("option")
+        optionElement.value = option.name
+        optionElement.innerText = option.name
+        selectElement.appendChild(optionElement)
+    })
+}
+
+
+
+////////// Formulaire de la modale //////////
+
+
+
+
+////recuperation et affichage photo 
+const inputPhoto = document.querySelector("#photo-input");
+const previewPhoto = document.querySelector(".preview-photo");
+
+inputPhoto.addEventListener("change", () => {
+    const photo = inputPhoto.files[0];
+
+    if (photo) {
+        echangeAffichage(".add-photo")
+        previewPhoto.src = URL.createObjectURL(photo);
+
+    }
+});

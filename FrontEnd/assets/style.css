@@ -457,6 +457,10 @@ footer nav ul {
 	cursor: pointer;
 }
 
+.modal-galerie-photo {
+	display: none;
+}
+
 .modal-title {
 	text-align: center;
 	margin-top: 30px;
@@ -487,10 +491,13 @@ footer nav ul {
 
 }
 
-.modal-gallery button {
+.delete-btn {
 	position: absolute;
 	top: 5px;
 	right: 5px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	width: 17px;
 	height: 17px;
 	padding: 0;
@@ -501,8 +508,77 @@ footer nav ul {
 	cursor: pointer;
 }
 
+.modal-ajout-photo {
+	display: none
+}
+
 .modal-add-btn {
 	display: block;
 	width: 237px;
 	font-size: 14px
+}
+
+.modal-form {
+	text-align: left;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	margin: 40px 80px;
+	padding-bottom: 50px;
+	border-bottom: 1px solid #B3B3B3;
+}
+
+.add-photo-container {
+	background-color: #e8f1f6;
+	height: 200px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	border-radius: 3px;
+}
+
+.add-photo-icon {
+	font-size: 70px;
+	color: #b9c5cc;
+}
+
+.add-photo-btn {
+	background-color: #cbd6dc;
+	color: #306685;
+	padding: 10px 35px;
+	border-radius: 50px;
+	cursor: pointer;
+	margin: 0;
+}
+
+
+.preview-photo {
+	display: none;
+	height: 200px;
+	position: absolute;
+}
+
+#photo-input {
+	display: none;
+}
+
+.modal-form .input {
+	height: 36px;
+	font-size: 1.2em;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+
+.parties-modal.open {
+	display: initial;
+}
+
+.add-photo {
+	display: none;
+}
+
+.add-photo.open {
+	display: initial;
 }

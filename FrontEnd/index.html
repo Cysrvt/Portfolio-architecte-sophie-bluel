@@ -90,17 +90,41 @@
 	<!-- MODALE -->
 	<div class="modal">
 		<div class="modal-container">
-			<button class="modal-return-btn"> <i class="fa-xs fa-solid fa-arrow-left"></i></button>
+			<button class="modal-return-btn parties-modal"> <i class="fa-xs fa-solid fa-arrow-left"></i></button>
 			<button class="modal-close-btn">×</button>
+			<div class="modal-galerie-photo parties-modal open">
+				<h2 class="modal-title">Galerie photo</h2>
+				<div class="modal-gallery">
+				</div>
+				<button class="modal-add-btn submit">
+					Ajouter une photo
+				</button>
+			</div>
+			<div class="modal-ajout-photo parties-modal">
+				<h2 class="modal-title">Ajout photo</h2>
+				<form class="modal-form">
+					<div class="add-photo-container">
 
-			<h2 class="modal-title">Galerie photo</h2>
+						<img class="preview-photo add-photo" src="" alt="Aperçu de la photo">
+						<i class="fa-regular fa-image add-photo-icon add-photo open"></i>
+						<label for="photo-input" class="add-photo-btn add-photo open">
+							+ Ajouter photo
+						</label>
+						<input type="file" id="photo-input" accept="image/png, image/jpeg">
+						<p class="add-photo open">jpg, png : 4mo max</p>
+					</div>
+					<label for="titre-work">Titre</label>
+					<input type="text" name="titre-work" id="titre-work" class="input">
+					<label for="categorie-select">Catégorie</label>
+					<select id="categorie-select" name="categorie-select" class="input">
 
-			<div class="modal-gallery">
+					</select>
+				</form>
+				<button class="modal-add-btn submit">
+					Valider
+				</button>
 			</div>
 
-			<button class="modal-add-btn submit">
-				Ajouter une photo
-			</button>
 
 		</div>
 	</div>

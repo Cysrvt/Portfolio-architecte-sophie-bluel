@@ -11,7 +11,7 @@ form.addEventListener("submit", (event) => {
         const password = document.getElementById("password").value
         validerPassword(password)
         const loginUser = { email, password }
-        postAPI(loginUser)
+        fetchPostUser(loginUser)
 
     } catch (error) {
         afficherMessageError(error.message)
@@ -48,7 +48,7 @@ const validerReponse = (response) => {
     }
 }
 
-const postAPI = async (loginUser) => {
+const fetchPostUser = async (loginUser) => {
     const loginUserJSON = JSON.stringify(loginUser)
     try {
         const response = await fetch(`${API}/users/login`, {
@@ -65,9 +65,11 @@ const postAPI = async (loginUser) => {
         const token = rep.token
         window.localStorage.setItem("token", JSON.stringify(token))
 
+        const userId = rep.userId
+        window.localStorage.setItem("userId", JSON.stringify(userId))
+
 
         window.location.href = "index.html"
-
         // revenir sur la page d'accueil qui sera remise en page !
 
 
