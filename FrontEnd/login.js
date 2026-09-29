@@ -1,6 +1,5 @@
 const API = "http://localhost:5678/api";
 const form = document.querySelector(".form-login")
-console.log("mon bouton est ", form)
 
 form.addEventListener("submit", (event) => {
     try {
@@ -64,10 +63,6 @@ const fetchPostUser = async (loginUser) => {
         // il faut recuperer le Token 
         const token = rep.token
         window.localStorage.setItem("token", JSON.stringify(token))
-
-        const userId = rep.userId
-        window.localStorage.setItem("userId", JSON.stringify(userId))
-
 
         window.location.href = "index.html"
         // revenir sur la page d'accueil qui sera remise en page !
