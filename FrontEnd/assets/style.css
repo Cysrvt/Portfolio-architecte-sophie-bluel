@@ -289,6 +289,8 @@ nav li {
 
 .gallery img {
 	width: 100%;
+	height: 100%;
+	object-fit: cover;
 
 }
 
@@ -320,7 +322,8 @@ nav li {
 	flex-direction: column;
 }
 
-.form-base span {
+.form-base span,
+#spanMessage {
 	color: red;
 	text-align: center;
 	margin-bottom: 20px;
@@ -378,7 +381,7 @@ footer nav ul {
 
 /* Affichage connecté */
 
-.bandeau-edit-mode {
+.edit-mode-banner {
 	background-color: #000;
 	color: white;
 	height: 59px;
@@ -418,14 +421,12 @@ footer nav ul {
 
 .modal-container {
 	position: relative;
-
 	width: 630px;
 	min-height: 680px;
-
 	background-color: white;
 	border-radius: 10px;
-
 	padding: 30px;
+	text-align: center;
 }
 
 .modal-return-btn {
@@ -457,7 +458,7 @@ footer nav ul {
 	cursor: pointer;
 }
 
-.modal-galerie-photo {
+.modal-gallery-view {
 	display: none;
 }
 
@@ -481,12 +482,13 @@ footer nav ul {
 .modal-gallery figure {
 	position: relative;
 	margin: 10px 0;
+	height: 120px
 }
 
 .modal-gallery img {
 
 	width: 100%;
-	display: block;
+	height: 100%;
 	object-fit: cover;
 
 }
@@ -508,7 +510,7 @@ footer nav ul {
 	cursor: pointer;
 }
 
-.modal-ajout-photo {
+.modal-form-view {
 	display: none
 }
 
@@ -560,11 +562,11 @@ footer nav ul {
 	position: absolute;
 }
 
-.photo-ajoutee {
+.photo-preview {
 	height: 200px;
 }
 
-.btn-delete-photo {
+.photo-delete-btn {
 	position: absolute;
 	top: 5px;
 	right: 5px;
@@ -608,4 +610,17 @@ footer nav ul {
 
 .js-preview-photo.open {
 	display: initial;
+}
+
+.form-submit-btn:disabled {
+	background-color: #A7A7A7;
+	color: white;
+	opacity: 0.6;
+	cursor: default;
+}
+
+.form-valider-btn {
+	background-color: #1D6154;
+	color: white;
+	cursor: pointer;
 }
