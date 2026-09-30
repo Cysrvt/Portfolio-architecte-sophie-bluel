@@ -1,20 +1,21 @@
 const gallery = document.querySelector(".gallery");
 const filters = document.querySelector(".filters");
-const lienNavLogin = document.querySelector(".lien-nav-login")
+const liNavLogin = document.querySelector(".li-nav-login")
 const API = "http://localhost:5678/api";
 
 let allWorks = []
 let allCategories = []
 
+//recuperation des projets
 const fetchWorks = async () => {
     try {
         const response = await fetch(`${API}/works`);
-        validerReponse(response)
+        validerResponse(response)
         const works = await response.json();
         allWorks = works;
         afficheGallery(allWorks)
         // pour la modale
-        afficherGalleryModal(allWorks)
+        afficheGalleryModal(allWorks)
         clickDeleteBtn()
     } catch (error) {
         console.error("Erreur dans la récupération de works", error);
@@ -22,8 +23,7 @@ const fetchWorks = async () => {
 }
 fetchWorks();
 
-// Creer la gallery dynamique
-
+// Cree la gallery dynamique
 const afficheGallery = (works) => {
     works.forEach(work => {
         const figure = document.createElement("figure");
@@ -46,7 +46,7 @@ const afficheGallery = (works) => {
 const fetchCategories = async () => {
     try {
         const response = await fetch(`${API}/categories`);
-        validerReponse(response)
+        validerResponse(response)
         const categories = await response.json();
         //creation des option pour le select de la modale
         createOptionSelect(categories)
@@ -81,7 +81,7 @@ const createFilters = (listCategories) => {
     )
 }
 // Changement du Style des boutons quand le filtre change a l'ecoute des boutons
-const styleBtnActive = (btn) => {
+const styleFiltersBtn = (btn) => {
     const allButtons = document.querySelectorAll(".btn-filter")
     allButtons.forEach(button => {
         button.classList.remove("active-filter")
@@ -94,7 +94,7 @@ const clickFilterBtn = () => {
     const filterBtns = document.querySelectorAll(".btn-filter")
     filterBtns.forEach((btn) => {
         btn.addEventListener("click", () => {
-            styleBtnActive(btn)
+            styleFiltersBtn(btn)
             gallery.innerHTML = ""
             if (btn.id === "0") {
                 afficheGallery(allWorks)
@@ -111,7 +111,7 @@ const clickFilterBtn = () => {
 
 
 //Affiche ou Désaffiche les balises concernées par le mode édition
-const afficherEditMode = () => {
+const styleEditMode = () => {
     const editMode = document.querySelectorAll(".edit-mode")
 
     editMode.forEach((element) => {
@@ -126,19 +126,19 @@ const recupToken = () => {
 }
 
 // Regarde si y a un token, si oui, ca passe la page en mode edition
-const ModeConnecte = () => {
+const modeConnecte = () => {
     const token = recupToken()
     if (token) {
-        lienNavLogin.innerText = "Logout"
-        afficherEditMode()
+        liNavLogin.innerText = "Logout"
+        styleEditMode()
     }
 }
-ModeConnecte()
+modeConnecte()
 
 // Au click sur logout/login si y a un token 
 // ca l'enleve et rafraichi la page 
 // sinon ca suit le lien normalement
-lienNavLogin.addEventListener("click", (event) => {
+liNavLogin.addEventListener("click", (event) => {
     const token = recupToken()
     if (token) {
         event.preventDefault()
@@ -166,7 +166,7 @@ modifierElement.addEventListener("click", ouvrirModal)
 
 // Pour fermer la modale //
 const fermerModal = () => {
-    echangeAffichage(".parties-modal")
+    changeClassOpen("js-gallery-modal", "js-form-modal")
     modal.classList.remove("open")
 }
 // a la croix  
@@ -178,19 +178,20 @@ modal.addEventListener("click", (event) => {
     }
 })
 
-// Pour mettre en place les echanges apercu suivant les parties ouvertes
-const echangeAffichage = (classChange) => {
-    const allChanges = document.querySelectorAll(classChange)
-    allChanges.forEach((element) => {
-        element.classList.toggle("open")
-    })
-    afficherMessage("")
-}
-modalAddBtn.addEventListener("click", () => echangeAffichage(".parties-modal"))
-modalReturnBtn.addEventListener("click", () => echangeAffichage(".parties-modal"))
+//ecoute du bouton ajouter une photo
+modalAddBtn.addEventListener("click", () => {
+    changeClassOpen("js-form-modal", "js-gallery-modal")
+    afficheMessageModal("")
+})
+//ecoute du bouton retour a la galerie de la modale
+modalReturnBtn.addEventListener("click", () => {
+    changeClassOpen("js-gallery-modal", "js-form-modal")
+    reinitialiseForm()
+    afficheMessageModal("")
+})
 
 // Creation de la gallery pour la modale 
-const afficherGalleryModal = (works) => {
+const afficheGalleryModal = (works) => {
     works.forEach(work => {
         const figure = document.createElement("figure");
         const img = document.createElement("img");
@@ -216,21 +217,21 @@ const majGalleries = () => {
 }
 
 // affiche un message dans le span en bas de la modale
-const afficherMessage = (message) => {
+const afficheMessageModal = (message) => {
     const spanMessage = document.getElementById("spanMessage")
     spanMessage.innerText = message
 }
 
 //fonction qui valide la reponse de l'API
-const validerReponse = (response) => {
+const validerResponse = (response) => {
     if (!response.ok) {
-        afficherMessage("Une erreur est survenue")
+        afficheMessageModal("Une erreur est survenue")
         throw new Error("Probleme au niveau de la réponse de l'API")
     }
 }
 
 // Suppression du projet choisi
-const deleteWork = async (workId) => {
+const fetchDeleteWork = async (workId) => {
     const token = recupToken()
     try {
         const response = await fetch(`${API}/works/${workId}`, {
@@ -240,8 +241,8 @@ const deleteWork = async (workId) => {
                 Authorization: `Bearer ${token}`,
             },
         })
-        validerReponse(response)
-        afficherMessage("Projet supprimé !")
+        validerResponse(response)
+        afficheMessageModal("Projet supprimé !")
         majGalleries()
 
     } catch (error) {
@@ -254,7 +255,7 @@ const clickDeleteBtn = () => {
     const allDeleteBtns = document.querySelectorAll(".delete-btn")
     allDeleteBtns.forEach(element => {
         element.addEventListener("click", () => {
-            deleteWork(element.getAttribute("workid"))
+            fetchDeleteWork(element.getAttribute("workid"))
         }
         )
     }
@@ -279,42 +280,66 @@ const createOptionSelect = (options) => {
 
 ////recuperation et affichage photo 
 const inputPhotoWork = document.querySelector("#photo-input");
-const previewPhoto = document.querySelector(".preview-photo");
+const previewPhoto = document.querySelector(".photo-ajoutee");
 const inputTitleWork = document.querySelector("#title-work")
 const selectCategory = document.querySelector("#category-select")
+const btnDeletePhoto = document.querySelector(".btn-delete-photo")
 
+
+// ajoute ou enleve la class "open" aux elements
+const changeClassOpen = (addClass, removeClass) => {
+    const allElementsAddClass = document.querySelectorAll(`.${addClass}`)
+    const allElementsRemoveClass = document.querySelectorAll(`.${removeClass}`)
+    allElementsAddClass.forEach(element => {
+        element.classList.add("open")
+    })
+    allElementsRemoveClass.forEach(element => {
+        element.classList.remove("open")
+    })
+}
 //ecoute de l'input photo
 inputPhotoWork.addEventListener("change", () => {
     const photo = inputPhotoWork.files[0];
     if (photo) {
         if (photo.size > 4 * 1024 * 1024) {
-            afficherMessage("La photo dépasse 4 Mo")
+            afficheMessageModal("La photo dépasse 4 Mo")
             inputPhotoWork.value = ""
         } else {
             affichePreviewPhoto(photo)
         }
     }
 });
-
+//affiche la photo chargée dans le input
 const affichePreviewPhoto = (photo) => {
-    echangeAffichage(".add-photo")
+    changeClassOpen("js-preview-photo", "js-add-photo")
     previewPhoto.src = URL.createObjectURL(photo);
+
 }
 
+//enleve la photo du preview et de l'input
+btnDeletePhoto.addEventListener("click", () => {
+    changeClassOpen("js-add-photo", "js-preview-photo")
+    inputPhotoWork.value = ""
+    previewPhoto.src = ""
+
+})
+
+//verifie que les trois champs soit remplit
 const verifierForm = () => {
     const photo = inputPhotoWork.files[0]
-    const title = inputTitleWork.value
+    const title = inputTitleWork.value.trim()
     const category = selectCategory.value
     return photo && title && category
-
 }
 
+//actualise le bouton valider. tant que verifierForm est False, disabled est True
 const actualiserValiderBtn = () => {
     const validerBtn = document.querySelector(".form-valider-btn")
     validerBtn.disabled = !verifierForm()
 }
 actualiserValiderBtn()
 
+//demande d'actualisation du bouton valider a chaque changement dans le form
 inputPhotoWork.addEventListener("change", actualiserValiderBtn)
 inputTitleWork.addEventListener("input", actualiserValiderBtn)
 selectCategory.addEventListener("change", actualiserValiderBtn)
@@ -334,11 +359,11 @@ const reinitialiseForm = () => {
     selectCategory.value = ""
     inputPhotoWork.value = ""
     previewPhoto.src = ""
-    echangeAffichage(".add-photo")
+    changeClassOpen("js-add-photo", "js-preview-photo")
     actualiserValiderBtn()
 }
 
-
+//ecoute du submit du form qui lance la fetchPostWork
 const form = document.querySelector(".modal-form")
 form.addEventListener("submit", (event) => {
     event.preventDefault()
@@ -347,6 +372,8 @@ form.addEventListener("submit", (event) => {
     }
 })
 
+//Demande a l'API d'ajouter un projet. Si le projet est bien ajouter, 
+//reinitialisation du form et gallery actualisée
 const fetchPostWork = async (data) => {
     const token = recupToken()
     try {
@@ -355,13 +382,14 @@ const fetchPostWork = async (data) => {
             headers: { Authorization: `Bearer ${token}` },
             body: data
         })
-
-        validerReponse(response)
+        validerResponse(response)
         reinitialiseForm()
-        afficherMessage("Projet ajouté !")
+        afficheMessageModal("Projet ajouté !")
         majGalleries()
 
     } catch (error) {
         console.error("Erreur dans le POST du work", error)
     }
 }
+
+

@@ -27,7 +27,7 @@
 			<ul>
 				<li class="page-active">projets</li>
 				<li><a href="#" class="lien-nav">contact</a></li>
-				<li><a href="login.html" class="lien-nav lien-nav-login">login</a></li>
+				<li><a href="login.html" class="lien-nav li-nav-login">login</a></li>
 				<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 			</ul>
 		</nav>
@@ -90,9 +90,9 @@
 	<!-- MODALE -->
 	<div class="modal">
 		<div class="modal-container">
-			<button class="modal-return-btn parties-modal"> <i class="fa-xs fa-solid fa-arrow-left"></i></button>
+			<button class="modal-return-btn js-form-modal"> <i class="fa-xs fa-solid fa-arrow-left"></i></button>
 			<button class="modal-close-btn">×</button>
-			<div class="modal-galerie-photo parties-modal open">
+			<div class="modal-galerie-photo js-gallery-modal open">
 				<h2 class="modal-title">Galerie photo</h2>
 				<div class="modal-gallery">
 				</div>
@@ -100,18 +100,21 @@
 					Ajouter une photo
 				</button>
 			</div>
-			<div class="modal-ajout-photo parties-modal">
+			<div class="modal-ajout-photo js-form-modal">
 				<h2 class="modal-title">Ajout photo</h2>
 				<form class="modal-form">
 					<div class="add-photo-container">
+						<div class="preview-photo js-preview-photo">
+							<button class="btn-delete-photo">×</button>
+							<img class="photo-ajoutee" src="" alt="Aperçu de la photo">
+						</div>
 
-						<img class="preview-photo add-photo" src="" alt="Aperçu de la photo">
-						<i class="fa-regular fa-image add-photo-icon add-photo open"></i>
-						<label for="photo-input" class="add-photo-btn add-photo open">
+						<i class="fa-regular fa-image add-photo-icon js-add-photo open"></i>
+						<label for="photo-input" class="add-photo-btn js-add-photo open">
 							+ Ajouter photo
 						</label>
 						<input type="file" id="photo-input" accept="image/png, image/jpeg">
-						<p class="add-photo open">jpg, png : 4mo max</p>
+						<p class="js-add-photo open">jpg, png : 4mo max</p>
 					</div>
 					<label for="title-work">Titre</label>
 					<input type="text" name="title-work" id="title-work" class="input">
