@@ -480,6 +480,8 @@ footer nav ul {
 	gap: 10px;
 	padding-bottom: 50px;
 	border-bottom: 1px solid #B3B3B3;
+	max-height: 440px;
+	overflow-y: auto;
 }
 
 .modal-gallery figure {
