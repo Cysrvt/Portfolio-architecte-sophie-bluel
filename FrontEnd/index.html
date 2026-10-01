@@ -18,7 +18,7 @@
 </head>
 
 <body>
-	<div class="edit-mode-banner edit-mode">
+	<div class="edit-mode-banner js-edit-mode">
 		<p><i class="fa-regular fa-pen-to-square"></i> <span>Mode édition</span></p>
 	</div>
 	<header>
@@ -48,23 +48,23 @@
 					décorateur(trice)</p>
 			</article>
 		</section>
-		<section id="portfolio">
-			<div class="title-container">
+		<section id="projets">
+			<div class="projets-header">
 				<h2>Mes Projets</h2>
-				<div class="modifier edit-mode">
+				<div class="projects-edit js-edit-mode">
 					<i class="fa-regular fa-pen-to-square"></i>
 					<span>modifier</span>
 				</div>
 			</div>
 
-			<div class="filters edit-mode open">
-
+			<div class="filters js-edit-mode open">
+				<!-- Filtres générées en JavaScript  -->
 			</div>
 			<div class="gallery">
-
+				<!-- Figures des projets générées en JavaScript  -->
 			</div>
 		</section>
-		<section id="contact" class="form-base">
+		<section id="contact">
 			<h2>Contact</h2>
 			<p>Vous avez un projet ? Discutons-en !</p>
 			<form action="#" method="post">
@@ -74,7 +74,7 @@
 				<input type="email" name="email" id="email">
 				<label for="message">Message</label>
 				<textarea name="message" id="message" cols="30" rows="10"></textarea>
-				<input type="submit" class="submit" value="Envoyer">
+				<button class="form-btn">Envoyer</button>
 			</form>
 		</section>
 	</main>
@@ -88,48 +88,64 @@
 	</footer>
 
 	<!-- MODALE -->
-	<div class="modal">
+	<dialog class="modal js-modal">
 		<div class="modal-container">
-			<button class="modal-return-btn js-form-modal"> <i class="fa-xs fa-solid fa-arrow-left"></i></button>
-			<button class="modal-close-btn">×</button>
-			<div class="modal-gallery-view js-gallery-modal open">
+
+
+			<div class="modal-nav">
+				<button class="modal-nav-return js-form-modal"> <i class="fa-xs fa-solid fa-arrow-left"></i></button>
+				<button class="modal-nav-close">×</button>
+			</div>
+
+
+			<section class="modal-gallery-view js-gallery-modal open">
 				<h2 class="modal-title">Galerie photo</h2>
 				<div class="modal-gallery">
 				</div>
-				<button class="modal-add-btn submit">
+				<button class="modal-add-btn modal-button">
 					Ajouter une photo
 				</button>
-			</div>
-			<div class="modal-form-view js-form-modal">
+			</section>
+
+
+			<section class="modal-form-view js-form-modal">
+
 				<h2 class="modal-title">Ajout photo</h2>
+
 				<form class="modal-form">
-					<div class="add-photo-container">
-						<div class="preview-photo js-preview-photo">
-							<button class="photo-delete-btn">×</button>
+
+					<div class="add-photo-container ">
+						<div class="preview-container js-preview-container">
+							<div type="button" class="delete-photo-btn">×</div>
 							<img class="photo-preview" src="" alt="Aperçu de la photo">
 						</div>
-
-						<i class="fa-regular fa-image add-photo-icon js-add-photo open"></i>
-						<label for="photo-input" class="add-photo-btn js-add-photo open">
-							+ Ajouter photo
-						</label>
-						<input type="file" id="photo-input" accept="image/png, image/jpeg">
-						<p class="js-add-photo open">jpg, png : 4mo max</p>
+						<div class="photo-upload  js-add-photo open">
+							<i class="fa-regular fa-image add-photo-icon"></i>
+							<label for="photo-input" class="add-photo-label">
+								+ Ajouter photo
+							</label>
+							<input type="file" id="photo-input" accept="image/png, image/jpeg">
+							<p>jpg, png : 4mo max</p>
+						</div>
+						<span class="span-error-size"></span>
 					</div>
-					<label for="title-work">Titre</label>
-					<input type="text" name="title-work" id="title-work" class="input">
-					<label for="category-select">Catégorie</label>
-					<select id="category-select" name="category-select" class="input">
+					<div class="title-and-category-container">
+						<label for="title-work">Titre</label>
+						<input type="text" name="title-work" id="title-work" class="input">
+						<label for="category-select">Catégorie</label>
+						<select id="category-select" name="category-select" class="input">
+							<!-- Catégories générées en JavaScript -->
+						</select>
+					</div>
 
-					</select>
-					<button class="form-submit-btn submit">
+					<button class="form-submit-btn modal-button ">
 						Valider
 					</button>
 				</form>
-			</div>
-			<span id="spanMessage"></span>
+			</section>
+			<span class="modal-message"></span>
 		</div>
-	</div>
+	</dialog>
 </body>
 
 </html>

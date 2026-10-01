@@ -143,6 +143,9 @@ body {
 	background-color: #FFFEF8;
 }
 
+main {
+	margin: 0 50px;
+}
 
 header {
 	display: flex;
@@ -151,7 +154,7 @@ header {
 }
 
 section {
-	margin: 50px 0
+	margin: 50px 0;
 }
 
 h1 {
@@ -163,6 +166,7 @@ h1 {
 	color: #B1663C
 }
 
+/* titre */
 h1>span {
 	font-family: 'Work Sans';
 	font-size: 10px;
@@ -174,19 +178,26 @@ h2 {
 	font-family: 'Syne';
 	font-weight: 700;
 	font-size: 30px;
-	color: #1D6154
+	color: #1D6154;
+	text-align: center;
 }
 
+/* nav */
 nav ul {
 	display: flex;
 	align-items: center;
 	list-style-type: none;
+	gap: 30px;
 
 }
 
 nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
+}
+
+nav img {
+	width: 20px;
 }
 
 .lien-nav {
@@ -204,6 +215,7 @@ nav li {
 
 }
 
+/* section intro */
 #introduction {
 	display: flex;
 	align-items: center;
@@ -220,27 +232,31 @@ nav li {
 }
 
 #introduction article {
-	flex: 1
+	flex: 1;
 }
 
 #introduction h2 {
 	margin-bottom: 1em;
+	text-align: start;
 }
 
 #introduction p {
 	margin-bottom: 0.5em;
+	padding-right: 15%;
 }
 
-
-.title-container {
+/* section projets */
+/******Projets header  */
+.projets-header {
 	position: relative;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	margin-bottom: 40px;
+	padding-top: 40px;
 }
 
-.modifier {
+.projects-edit {
 	position: absolute;
 	left: calc(50% + 120px);
 	align-items: center;
@@ -253,7 +269,6 @@ nav li {
 	justify-content: center;
 	gap: 10px;
 	height: 38px;
-	margin-bottom: 40px;
 
 }
 
@@ -269,7 +284,7 @@ nav li {
 	padding: 0 10px;
 }
 
-.active-filter {
+.js-active-filter {
 	color: white;
 	background-color: #1D6154;
 }
@@ -279,12 +294,20 @@ nav li {
 	background-color: #1D6154;
 }
 
+/****** Gallery  */
 .gallery {
 	width: 100%;
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
 	grid-column-gap: 20px;
-	grid-row-gap: 20px;
+	grid-row-gap: 40px;
+	padding: 40px;
+	box-sizing: border-box;
+}
+
+.gallery figcaption {
+	margin-top: 5px;
+
 }
 
 .gallery img {
@@ -294,81 +317,84 @@ nav li {
 
 }
 
+/* section Contact */
 #contact {
-	width: 50%;
+	width: 379px;
 	margin: auto;
 }
 
-.login {
-	width: 380px;
-	height: 600px;
-	padding-top: 60px;
-	margin: auto;
-}
-
-.form-base>* {
+#contact p {
 	text-align: center;
-
+	margin-top: 14px;
 }
 
-.form-base h2 {
-	margin-bottom: 20px;
-}
+/* Formulaire */
 
-.form-base form {
+form {
 	text-align: left;
-	margin-top: 30px;
 	display: flex;
 	flex-direction: column;
 }
 
-.form-base span,
-#spanMessage {
-	color: red;
-	text-align: center;
+form h2 {
 	margin-bottom: 20px;
 }
 
 
-.form-base input,
-.submit {
-	height: 36px;
+
+form input,
+form select {
+	font-family: Work Sans;
+	color: #444444;
+	height: 51px;
+	font-size: 14px;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	padding-left: 10px;
+}
+
+form label {
+	color: #3D3D3D;
+	margin: 3em 0 0.5em 0;
+	font-size: medium;
+
+}
+
+form textarea {
 	font-size: 1.2em;
+	padding: 10px;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 
-.form-base label {
-	margin: 2em 0 1em 0;
-}
-
-.form-base textarea {
-	border: none;
-	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
-}
-
-.submit {
+form button,
+.modal-button {
 	font-family: 'Syne';
 	font-weight: 700;
 	color: white;
 	background-color: #1D6154;
-	margin: 2em auto;
+	margin: 3em auto 1em auto;
 	width: 180px;
+	height: 36px;
 	text-align: center;
 	border-radius: 60px;
+	border: none;
 }
 
-
-.submit:hover {
+form button:hover {
 	background-color: #0E2F28;
 }
 
-.login a {
-	color: #000;
+form span {
+	color: red;
+	text-align: center;
+	margin: 10px 0;
+	font-size: 16px;
 }
 
-footer {
 
+/* footer */
+footer {
 	background-color: #FFFFFF;
 }
 
@@ -379,29 +405,9 @@ footer nav ul {
 	margin: 2em
 }
 
-/* Affichage connecté */
-
-.edit-mode-banner {
-	background-color: #000;
-	color: white;
-	height: 59px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-.edit-mode {
-	display: none;
-}
-
-.edit-mode.open {
-	display: flex;
-}
-
 /*   MODALE    */
 
 .modal {
-	display: none;
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -415,66 +421,63 @@ footer nav ul {
 	z-index: 1000;
 }
 
-.modal.open {
-	display: flex;
-}
 
 .modal-container {
-	position: relative;
 	width: 630px;
 	min-height: 680px;
 	background-color: white;
 	border-radius: 10px;
-	padding: 30px;
+	padding: 20px;
 	text-align: center;
 }
 
-.modal-return-btn {
-	display: none;
+.modal-nav {
+	position: relative;
+}
+
+.modal-nav button {
 	position: absolute;
-	top: 25px;
-	left: 25px;
-
+	justify-content: center;
+	align-items: center;
+	width: 24px;
+	height: 24px;
+	background-color: white;
+	color: black;
 	border: none;
-	background: none;
-
-	font-size: 24px;
+	border-radius: 2px;
 	cursor: pointer;
+	font-size: 36px;
 }
 
-.modal-return-btn.open {
-	display: initial;
+.modal-nav-close {
+	display: flex;
+	top: 5px;
+	right: 5px;
 }
 
-.modal-close-btn {
-	position: absolute;
-	top: 25px;
-	right: 25px;
-
-	border: none;
-	background: none;
-
-	font-size: 24px;
-	cursor: pointer;
-}
-
-.modal-gallery-view {
-	display: none;
+.modal-nav-return {
+	top: 5px;
+	left: 5px;
 }
 
 .modal-title {
-	text-align: center;
-	margin-top: 30px;
 	color: #000;
 	font-family: work sans;
 	font-weight: 400;
+	margin-top: 30px;
+	margin-bottom: 40px;
+}
+
+.modal-container section {
+	flex-direction: column;
+	margin: 0 80px;
+
 }
 
 .modal-gallery {
 	display: grid;
 	grid-template-columns: repeat(5, 1fr);
 	gap: 10px;
-	margin: 40px 80px;
 	padding-bottom: 50px;
 	border-bottom: 1px solid #B3B3B3;
 }
@@ -486,14 +489,13 @@ footer nav ul {
 }
 
 .modal-gallery img {
-
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
 
 }
 
-.delete-btn {
+.trash-btn {
 	position: absolute;
 	top: 5px;
 	right: 5px;
@@ -510,25 +512,13 @@ footer nav ul {
 	cursor: pointer;
 }
 
-.modal-form-view {
-	display: none
-}
-
-.modal-add-btn {
-	display: block;
-	width: 237px;
-	font-size: 14px
-}
 
 .modal-form {
-	text-align: left;
 	display: flex;
 	flex-direction: column;
-	gap: 10px;
-	margin: 40px 80px;
-	padding-bottom: 50px;
-	border-bottom: 1px solid #B3B3B3;
+
 }
+
 
 .add-photo-container {
 	background-color: #e8f1f6;
@@ -537,8 +527,15 @@ footer nav ul {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	gap: 10px;
 	border-radius: 3px;
+}
+
+.photo-upload {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
 }
 
 .add-photo-icon {
@@ -546,7 +543,7 @@ footer nav ul {
 	color: #b9c5cc;
 }
 
-.add-photo-btn {
+.add-photo-label {
 	background-color: #cbd6dc;
 	color: #306685;
 	padding: 10px 35px;
@@ -555,72 +552,104 @@ footer nav ul {
 	margin: 0;
 }
 
-
-.preview-photo {
+#photo-input {
 	display: none;
+}
 
+
+.preview-container {
 	position: absolute;
 }
 
 .photo-preview {
 	height: 200px;
+	object-fit: cover;
 }
 
-.photo-delete-btn {
+.delete-photo-btn {
 	position: absolute;
 	top: 5px;
 	right: 5px;
-
 	border: none;
 	background: #000;
 	color: #FFFFFF;
-
-	font-size: 15px;
+	width: 20px;
+	height: 20px;
+	font-size: 20px;
+	text-align: center;
 	cursor: pointer;
 }
 
-#photo-input {
-	display: none;
-}
-
-.modal-form .input {
-	height: 36px;
-	font-size: 1.2em;
-	border: none;
-	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
-}
-
-.js-form-modal.open {
-	display: initial;
-}
-
-.js-gallery-modal.open {
-	display: initial;
-}
-
-.js-add-photo {
-	display: none;
-}
-
-.js-add-photo.open {
-	display: initial;
+.title-and-category-container {
+	display: flex;
+	flex-direction: column;
+	border-bottom: 1px solid #B3B3B3;
+	padding-bottom: 3em;
 }
 
 
-
-.js-preview-photo.open {
-	display: initial;
+.modal-button {
+	width: 237px;
 }
 
-.form-submit-btn:disabled {
+form button:disabled {
 	background-color: #A7A7A7;
 	color: white;
 	opacity: 0.6;
 	cursor: default;
 }
 
-.form-valider-btn {
-	background-color: #1D6154;
+.modal-message {
+	font-size: 20px;
+	color: #1D6154;
+}
+
+
+
+/* LOGIN */
+
+.login {
+	width: 380px;
+	height: 600px;
+	padding-top: 60px;
+	margin: auto;
+}
+
+.login p {
+	text-align: center;
+	margin: 1em;
+}
+
+.login a {
+	color: #000;
+}
+
+/* Affichage connecté */
+
+.edit-mode-banner {
+	background-color: #000;
 	color: white;
-	cursor: pointer;
+	height: 59px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+/* Utiliser en JS */
+.js-modal,
+.js-edit-mode,
+.js-form-modal,
+.js-gallery-modal,
+.js-add-photo,
+.js-preview-container {
+	display: none;
+}
+
+.js-modal.open,
+.js-edit-mode.open,
+.js-form-modal.open,
+.js-gallery-modal.open,
+.js-add-photo.open,
+.js-preview-container.open {
+	display: flex;
 }

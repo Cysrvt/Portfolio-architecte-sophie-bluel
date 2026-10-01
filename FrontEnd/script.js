@@ -72,7 +72,7 @@ const createFilters = (listCategories) => {
         button.id = cat.id
         button.innerText = cat.name
         if (cat.id === "0") {
-            button.classList = "btn-filter active-filter"
+            button.classList = "btn-filter js-active-filter"
         } else {
             button.classList = "btn-filter"
         }
@@ -84,9 +84,9 @@ const createFilters = (listCategories) => {
 const activerFiltre = (btn) => {
     const allButtons = document.querySelectorAll(".btn-filter")
     allButtons.forEach(button => {
-        button.classList.remove("active-filter")
+        button.classList.remove("js-active-filter")
     })
-    btn.classList.add("active-filter")
+    btn.classList.add("js-active-filter")
 }
 
 // Ecoute des boutons Filters
@@ -112,7 +112,7 @@ const ecouterFiltres = () => {
 
 //Affiche ou Désaffiche les balises concernées par le mode édition
 const styleEditMode = () => {
-    const editMode = document.querySelectorAll(".edit-mode")
+    const editMode = document.querySelectorAll(".js-edit-mode")
 
     editMode.forEach((element) => {
         element.classList.toggle("open")
@@ -150,19 +150,19 @@ liNavLogin.addEventListener("click", (event) => {
 
 /////////////////////// MODALE ////////////////////////////////
 
-const modal = document.querySelector(".modal")
-const modifierElement = document.querySelector(".modifier")
-const boutonFermerModale = document.querySelector(".modal-close-btn")
+const modal = document.querySelector(".js-modal")
+const projectsEditElement = document.querySelector(".projects-edit")
+const boutonFermerModale = document.querySelector(".modal-nav-close")
 const galleryModal = document.querySelector(".modal-gallery")
 const boutonAjouterPhoto = document.querySelector(".modal-add-btn")
-const boutonRetourModal = document.querySelector(".modal-return-btn")
+const boutonRetourModal = document.querySelector(".modal-nav-return")
 
 
 // Pour ouvrir la modale //
 const ouvrirModal = () => {
     modal.classList.add("open")
 }
-modifierElement.addEventListener("click", ouvrirModal)
+projectsEditElement.addEventListener("click", ouvrirModal)
 
 // Pour fermer la modale //
 const fermerModal = () => {
@@ -199,11 +199,11 @@ const afficherGalleryModal = (works) => {
         img.alt = `Une image du projet : ${work.title}`;
         figure.appendChild(img);
 
-        const deleteBtn = document.createElement("div");
-        deleteBtn.classList = "delete-btn"
-        deleteBtn.setAttribute('workid', work.id)
-        deleteBtn.innerHTML = '<i class="fa-xs fa-solid fa-trash-can"></i>'
-        figure.appendChild(deleteBtn);
+        const trashBtn = document.createElement("div");
+        trashBtn.classList = "trash-btn"
+        trashBtn.setAttribute('workid', work.id)
+        trashBtn.innerHTML = '<i class="fa-xs fa-solid fa-trash-can"></i>'
+        figure.appendChild(trashBtn);
         galleryModal.appendChild(figure);
     });
 
@@ -218,9 +218,12 @@ const actualiserGaleries = () => {
 
 // affiche un message dans le span en bas de la modale
 const afficheMessageModal = (message) => {
-    const spanMessage = document.getElementById("spanMessage")
-    spanMessage.innerText = message
+    const modalMessage = document.querySelector(".modal-message")
+    modalMessage.innerText = message
 }
+
+//ecoute le container de la modale pour enlever le message du span
+
 
 //fonction qui valide la reponse de l'API
 const validerResponse = (response) => {
@@ -242,7 +245,7 @@ const fetchDeleteWork = async (workId) => {
             },
         })
         validerResponse(response)
-        afficheMessageModal("Projet supprimé !")
+        afficheMessageModal("Le projet a été supprimé de votre galerie !")
         actualiserGaleries()
 
     } catch (error) {
@@ -252,7 +255,7 @@ const fetchDeleteWork = async (workId) => {
 
 // Ecoute de tout les boutons poubelles pour supprimer les works
 const ecouterDeleteBtn = () => {
-    const allDeleteBtns = document.querySelectorAll(".delete-btn")
+    const allDeleteBtns = document.querySelectorAll(".trash-btn")
     allDeleteBtns.forEach(element => {
         element.addEventListener("click", () => {
             fetchDeleteWork(element.getAttribute("workid"))
@@ -261,30 +264,6 @@ const ecouterDeleteBtn = () => {
     }
     )
 }
-
-
-/// creation option pour choix de catégorie au form modale
-const createOptionSelect = (options) => {
-    const selectElement = document.getElementById("category-select")
-    options.forEach(option => {
-        const optionElement = document.createElement("option")
-        optionElement.value = option.id
-        optionElement.innerText = option.name
-        selectElement.appendChild(optionElement)
-    })
-}
-
-
-////////// Formulaire de la modale //////////
-
-
-////recuperation et affichage photo 
-const inputPhotoWork = document.querySelector("#photo-input");
-const photoPreview = document.querySelector(".photo-preview");
-const inputTitleWork = document.querySelector("#title-work")
-const selectCategory = document.querySelector("#category-select")
-const photoDeleteBtn = document.querySelector(".photo-delete-btn")
-
 
 // ajoute ou enleve la class "open" aux elements
 const changeClassOpen = (addClass, removeClass) => {
@@ -297,28 +276,60 @@ const changeClassOpen = (addClass, removeClass) => {
         element.classList.remove("open")
     })
 }
+
+
+////////// Formulaire de la modale //////////
+
+
+////recuperation et affichage photo 
+const inputPhotoWork = document.querySelector("#photo-input");
+const photoPreview = document.querySelector(".photo-preview");
+const inputTitleWork = document.querySelector("#title-work")
+const selectCategory = document.querySelector("#category-select")
+const deletePhotoBtn = document.querySelector(".delete-photo-btn")
+
+
+
+//affiche message erreur pour la taille de l'image
+const afficheErreurTaille = (message) => {
+    let spanErrorSize = document.querySelector(".span-error-size")
+    spanErrorSize.innerText = message
+}
+
+/// creation option pour choix de catégorie au form modale
+const createOptionSelect = (options) => {
+    const selectElement = document.getElementById("category-select")
+    options.forEach(option => {
+        const optionElement = document.createElement("option")
+        optionElement.value = option.id
+        optionElement.innerText = option.name
+        selectElement.appendChild(optionElement)
+    })
+}
+
 //ecoute de l'input photo
 inputPhotoWork.addEventListener("change", () => {
     const photo = inputPhotoWork.files[0];
     if (photo) {
         if (photo.size > 4 * 1024 * 1024) {
-            afficheMessageModal("La photo dépasse 4 Mo")
+            afficheErreurTaille("La photo dépasse 4 Mo")
             inputPhotoWork.value = ""
         } else {
+            afficheErreurTaille("")
             affichephotoPreview(photo)
         }
     }
 });
 //affiche la photo chargée dans le input
 const affichephotoPreview = (photo) => {
-    changeClassOpen("js-preview-photo", "js-add-photo")
+    changeClassOpen("js-preview-container", "js-add-photo")
     photoPreview.src = URL.createObjectURL(photo);
 
 }
 
 //enleve la photo du preview et de l'input
-photoDeleteBtn.addEventListener("click", () => {
-    changeClassOpen("js-add-photo", "js-preview-photo")
+deletePhotoBtn.addEventListener("click", () => {
+    changeClassOpen("js-add-photo", "js-preview-container")
     inputPhotoWork.value = ""
     photoPreview.src = ""
     actualiserValiderBtn()
@@ -339,10 +350,19 @@ const actualiserValiderBtn = () => {
 }
 actualiserValiderBtn()
 
-//demande d'actualisation du bouton valider a chaque changement dans le form
-inputPhotoWork.addEventListener("change", actualiserValiderBtn)
-inputTitleWork.addEventListener("input", actualiserValiderBtn)
-selectCategory.addEventListener("change", actualiserValiderBtn)
+//demande d'actualisation du bouton valider et le span message a chaque changement dans le form
+inputPhotoWork.addEventListener("change", () => {
+    actualiserValiderBtn()
+    afficheMessageModal('')
+})
+inputTitleWork.addEventListener("input", () => {
+    actualiserValiderBtn()
+    afficheMessageModal('')
+})
+selectCategory.addEventListener("change", () => {
+    actualiserValiderBtn()
+    afficheMessageModal('')
+})
 
 //creation du FormData
 const createFormData = () => {
@@ -359,7 +379,7 @@ const reinitialiserForm = () => {
     selectCategory.value = ""
     inputPhotoWork.value = ""
     photoPreview.src = ""
-    changeClassOpen("js-add-photo", "js-preview-photo")
+    changeClassOpen("js-add-photo", "js-preview-container")
     actualiserValiderBtn()
 }
 
@@ -384,7 +404,7 @@ const fetchPostWork = async (data) => {
         })
         validerResponse(response)
         reinitialiserForm()
-        afficheMessageModal("Projet ajouté !")
+        afficheMessageModal("Le projet a bien été ajouté à votre galerie!")
         actualiserGaleries()
 
     } catch (error) {
