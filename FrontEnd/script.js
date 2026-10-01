@@ -1,25 +1,25 @@
 const gallery = document.querySelector(".gallery");
 const filters = document.querySelector(".filters");
-const liNavLogin = document.querySelector(".nav-login")
+const liNavLogin = document.querySelector(".nav-login");
 const API = "http://localhost:5678/api";
 
-let allWorks = []
-let allCategories = []
+let allWorks = [];
+let allCategories = [];
 
 //recuperation des projets
 const fetchGetWorks = async () => {
     try {
         const response = await fetch(`${API}/works`);
-        validerResponse(response)
+        validerResponse(response);
         const works = await response.json();
         allWorks = works;
-        afficherGallery(allWorks)
+        afficherGallery(allWorks);
         // pour la modale
-        afficherGalleryModal(allWorks)
-        ecouterDeleteBtn()
+        afficherGalleryModal(allWorks);
+        ecouterDeleteBtn();
     } catch (error) {
         console.error("Erreur dans la récupération de works", error);
-    };
+    }
 }
 fetchGetWorks();
 
@@ -46,21 +46,21 @@ const afficherGallery = (works) => {
 const fetchGetCategories = async () => {
     try {
         const response = await fetch(`${API}/categories`);
-        validerResponse(response)
+        validerResponse(response);
         const categories = await response.json();
         //creation des option pour le select de la modale
-        createOptionSelect(categories)
+        createOptionSelect(categories);
         //ajout du "tous" pour les filtres
         categories.unshift({
             id: "0",
             name: 'Tous',
         });
         allCategories = categories;
-        createFilters(allCategories)
-        ecouterFiltres()
+        createFilters(allCategories);
+        ecouterFiltres();
     }
     catch (error) {
-        console.error("Probleme de récupération des categories", error)
+        console.error("Probleme de récupération des categories", error);
     }
 }
 fetchGetCategories()
@@ -68,23 +68,24 @@ fetchGetCategories()
 // Creation de la liste des Filtres
 const createFilters = (listCategories) => {
     listCategories.forEach(cat => {
-        const button = document.createElement("button")
-        button.id = cat.id
-        button.innerText = cat.name
+        const button = document.createElement("button");
+        button.id = cat.id;
+        button.innerText = cat.name;
         if (cat.id === "0") {
-            button.classList = "btn-filter js-active-filter"
+            button.classList = "btn-filter js-active-filter";
         } else {
-            button.classList = "btn-filter"
+            button.classList = "btn-filter";
         }
-        filters.appendChild(button)
+        filters.appendChild(button);
     }
     )
 }
+
 // Changement du Style des boutons quand le filtre change a l'ecoute des boutons
 const activerFiltre = (btn) => {
-    const allButtons = document.querySelectorAll(".btn-filter")
+    const allButtons = document.querySelectorAll(".filters .btn-filter");
     allButtons.forEach(button => {
-        button.classList.remove("js-active-filter")
+        button.classList.remove("js-active-filter");
     })
     btn.classList.add("js-active-filter")
 }
