@@ -156,6 +156,7 @@ const boutonFermerModale = document.querySelector(".modal-nav-close")
 const galleryModal = document.querySelector(".modal-gallery")
 const boutonAjouterPhoto = document.querySelector(".modal-add-btn")
 const boutonRetourModal = document.querySelector(".modal-nav-return")
+const modalContainer = document.querySelector(".modal-container")
 
 
 // Pour ouvrir la modale //
@@ -167,6 +168,8 @@ projectsEditElement.addEventListener("click", ouvrirModal)
 // Pour fermer la modale //
 const fermerModal = () => {
     changeClassOpen("js-gallery-modal", "js-form-modal")
+    reinitialiserForm()
+    afficheMessageModal("")
     modal.classList.remove("open")
 }
 // a la croix  
@@ -223,7 +226,12 @@ const afficheMessageModal = (message) => {
 }
 
 //ecoute le container de la modale pour enlever le message du span
-
+modalContainer.addEventListener("click", (event) => {
+    const allTrashBtn = document.querySelectorAll(".trash-btn")
+    if (event.target != allTrashBtn) {
+        afficheMessageModal("")
+    }
+})
 
 //fonction qui valide la reponse de l'API
 const validerResponse = (response) => {
@@ -351,18 +359,9 @@ const actualiserValiderBtn = () => {
 actualiserValiderBtn()
 
 //demande d'actualisation du bouton valider et le span message a chaque changement dans le form
-inputPhotoWork.addEventListener("change", () => {
-    actualiserValiderBtn()
-    afficheMessageModal('')
-})
-inputTitleWork.addEventListener("input", () => {
-    actualiserValiderBtn()
-    afficheMessageModal('')
-})
-selectCategory.addEventListener("change", () => {
-    actualiserValiderBtn()
-    afficheMessageModal('')
-})
+inputPhotoWork.addEventListener("change", actualiserValiderBtn)
+inputTitleWork.addEventListener("input", actualiserValiderBtn)
+selectCategory.addEventListener("change", actualiserValiderBtn)
 
 //creation du FormData
 const createFormData = () => {
