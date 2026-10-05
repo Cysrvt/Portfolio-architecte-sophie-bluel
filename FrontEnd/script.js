@@ -27,7 +27,7 @@ fetchGetWorks();
 const afficherGallery = (works) => {
     works.forEach(work => {
         const figure = document.createElement("figure");
-
+        figure.id = `figure${work.id}`
         const img = document.createElement("img");
         img.src = work.imageUrl;
         img.alt = `Une image du projet : ${work.title}`;
@@ -69,7 +69,7 @@ fetchGetCategories()
 const createFilters = (listCategories) => {
     listCategories.forEach(cat => {
         const button = document.createElement("button");
-        button.id = cat.id;
+        button.setAttribute("data-id", cat.id);
         button.innerText = cat.name;
         if (cat.id === "0") {
             button.classList = "btn-filter js-active-filter";
@@ -97,10 +97,10 @@ const ecouterFiltres = () => {
         btn.addEventListener("click", () => {
             activerFiltre(btn)
             gallery.innerHTML = ""
-            if (btn.id === "0") {
+            if (btn.getAttribute("data-id") === "0") {
                 afficherGallery(allWorks)
             } else {
-                const listFilterWorks = allWorks.filter(work => work.categoryId === Number(btn.id))
+                const listFilterWorks = allWorks.filter(work => work.categoryId === Number(btn.getAttribute("data-id")))
                 afficherGallery(listFilterWorks)
             }
         })
@@ -198,6 +198,7 @@ boutonRetourModal.addEventListener("click", () => {
 const afficherGalleryModal = (works) => {
     works.forEach(work => {
         const figure = document.createElement("figure");
+        figure.id = `figureModal${work.id}`
         const img = document.createElement("img");
         img.src = work.imageUrl;
         img.alt = `Une image du projet : ${work.title}`;
@@ -205,7 +206,7 @@ const afficherGalleryModal = (works) => {
 
         const trashBtn = document.createElement("div");
         trashBtn.classList = "trash-btn"
-        trashBtn.setAttribute('workid', work.id)
+        trashBtn.setAttribute('data-id', work.id)
         trashBtn.innerHTML = '<i class="fa-xs fa-solid fa-trash-can"></i>'
         figure.appendChild(trashBtn);
         galleryModal.appendChild(figure);
