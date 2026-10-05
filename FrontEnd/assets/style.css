@@ -497,7 +497,8 @@ footer nav ul {
 
 }
 
-.trash-btn {
+.trash-btn,
+.delete-photo-btn {
 	position: absolute;
 	top: 5px;
 	right: 5px;
@@ -511,6 +512,7 @@ footer nav ul {
 	color: white;
 	border: none;
 	border-radius: 2px;
+	margin: 0;
 	cursor: pointer;
 }
 
@@ -568,20 +570,6 @@ footer nav ul {
 	object-fit: cover;
 }
 
-.delete-photo-btn {
-	position: absolute;
-	top: 5px;
-	right: 5px;
-	border: none;
-	background: #000;
-	color: #FFFFFF;
-	width: 20px;
-	height: 20px;
-	font-size: 20px;
-	text-align: center;
-	cursor: pointer;
-}
-
 .title-and-category-container {
 	display: flex;
 	flex-direction: column;
@@ -600,12 +588,6 @@ form button:disabled {
 	opacity: 0.6;
 	cursor: default;
 }
-
-.modal-message {
-	font-size: 20px;
-	color: red;
-}
-
 
 
 /* LOGIN */
@@ -648,6 +630,7 @@ form button:disabled {
 /* Utiliser en JS */
 .js-modal,
 .js-edit-mode,
+.js-visit-mode,
 .js-form-modal,
 .js-gallery-modal,
 .js-add-photo,
@@ -657,6 +640,7 @@ form button:disabled {
 
 .js-modal.open,
 .js-edit-mode.open,
+.js-visit-mode.open,
 .js-form-modal.open,
 .js-gallery-modal.open,
 .js-add-photo.open,

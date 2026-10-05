@@ -1,6 +1,6 @@
 const gallery = document.querySelector(".gallery");
 const filters = document.querySelector(".filters");
-const liNavLogin = document.querySelector(".nav-login");
+const navLogin = document.querySelector(".nav-login");
 const API = "http://localhost:5678/api";
 
 let allWorks = [];
@@ -114,11 +114,16 @@ const ecouterFiltres = () => {
 
 
 //Affiche ou Désaffiche les balises concernées par le mode édition
-const styleEditMode = () => {
+const editMode = () => {
     const editMode = document.querySelectorAll(".js-edit-mode")
+    const visitMode = document.querySelectorAll(".js-visit-mode")
 
     editMode.forEach((element) => {
-        element.classList.toggle("open")
+        element.classList.add("open")
+    })
+
+    visitMode.forEach((element) => {
+        element.classList.remove("open")
     })
 }
 
@@ -132,8 +137,8 @@ const recupToken = () => {
 const initialiserModeEdition = () => {
     const token = recupToken()
     if (token) {
-        liNavLogin.innerText = "Logout"
-        styleEditMode()
+        navLogin.innerText = "Logout"
+        editMode()
     }
 }
 initialiserModeEdition()
@@ -141,7 +146,7 @@ initialiserModeEdition()
 // Au click sur logout/login si y a un token 
 // ca l'enleve et rafraichi la page 
 // sinon ca suit le lien normalement
-liNavLogin.addEventListener("click", (event) => {
+navLogin.addEventListener("click", (event) => {
     const token = recupToken()
     if (token) {
         event.preventDefault()
@@ -172,7 +177,6 @@ projectsEditElement.addEventListener("click", ouvrirModal)
 const fermerModal = () => {
     changeClassOpen("js-gallery-modal", "js-form-modal")
     reinitialiserForm()
-    afficheMessageModal("")
     modal.classList.remove("open")
 }
 // a la croix  
@@ -187,13 +191,11 @@ modal.addEventListener("click", (event) => {
 //ecoute du bouton ajouter une photo
 boutonAjouterPhoto.addEventListener("click", () => {
     changeClassOpen("js-form-modal", "js-gallery-modal")
-    afficheMessageModal("")
 })
 //ecoute du bouton retour a la galerie de la modale
 boutonRetourModal.addEventListener("click", () => {
     changeClassOpen("js-gallery-modal", "js-form-modal")
     reinitialiserForm()
-    afficheMessageModal("")
 })
 
 // Creation de la gallery pour la modale 
@@ -206,7 +208,7 @@ const afficherGalleryModal = (works) => {
         img.alt = `Une image du projet : ${work.title}`;
         figure.appendChild(img);
 
-        const trashBtn = document.createElement("div");
+        const trashBtn = document.createElement("button");
         trashBtn.classList = "trash-btn"
         trashBtn.setAttribute('work-id', work.id)
         trashBtn.innerHTML = '<i class="fa-xs fa-solid fa-trash-can"></i>'
@@ -214,13 +216,6 @@ const afficherGalleryModal = (works) => {
         galleryModal.appendChild(figure);
     });
 
-}
-
-
-// affiche un message dans le span en bas de la modale
-const afficheMessageModal = (message) => {
-    const modalMessage = document.querySelector(".modal-message")
-    modalMessage.innerText = message
 }
 
 //fonction qui valide la reponse de l'API
@@ -232,7 +227,7 @@ const validerResponse = (response) => {
 }
 
 // Suppression du projet choisi
-const fetchDeleteWork = async (workId, figure) => {
+const fetchDeleteWork = async (workId) => {
     const token = recupToken()
     try {
         const response = await fetch(`${API}/works/${workId}`, {
@@ -243,9 +238,8 @@ const fetchDeleteWork = async (workId, figure) => {
             },
         })
         validerResponse(response)
-        await fetchGetWorks()
         alert("Le projet a été supprimé de votre galerie !")
-
+        await fetchGetWorks()
         fermerModal()
 
     } catch (error) {
@@ -258,8 +252,7 @@ const ecouterDeleteBtn = () => {
     const allDeleteBtns = document.querySelectorAll(".trash-btn")
     allDeleteBtns.forEach(element => {
         element.addEventListener("click", (event) => {
-            const figure = event.target.closest("figure")
-            fetchDeleteWork(element.getAttribute("work-id"), figure)
+            fetchDeleteWork(element.getAttribute("work-id"))
         }
         )
     }
@@ -396,11 +389,10 @@ const fetchPostWork = async (data) => {
             body: data
         })
         validerResponse(response)
+        alert("Le projet a bien été ajouté à votre galerie!")
         await fetchGetWorks()
         reinitialiserForm()
         fermerModal()
-        alert("Le projet a bien été ajouté à votre galerie!")
-
     } catch (error) {
         console.error("Erreur dans le POST du work", error)
     }

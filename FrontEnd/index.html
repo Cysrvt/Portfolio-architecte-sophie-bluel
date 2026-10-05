@@ -57,7 +57,7 @@
 				</div>
 			</div>
 
-			<div class="filters js-edit-mode open">
+			<div class="filters js-visit-mode open">
 				<!-- Filtres générées en JavaScript  -->
 			</div>
 			<div class="gallery">
@@ -88,7 +88,7 @@
 	</footer>
 
 	<!-- MODALE -->
-	<dialog class="modal js-modal">
+	<section class="modal js-modal">
 		<div class="modal-container">
 
 
@@ -116,7 +116,8 @@
 
 					<div class="add-photo-container ">
 						<div class="preview-container js-preview-container">
-							<div type="button" class="delete-photo-btn">×</div>
+							<button type="button" class="delete-photo-btn"><i
+									class="fa-xs fa-solid fa-trash-can"></i></button>
 							<img class="photo-preview" src="" alt="Aperçu de la photo">
 						</div>
 						<div class="photo-upload  js-add-photo open">
@@ -134,6 +135,7 @@
 						<input type="text" name="title-work" id="title-work" class="input">
 						<label for="category-select">Catégorie</label>
 						<select id="category-select" name="category-select" class="input">
+							<option value=""></option>
 							<!-- Catégories générées en JavaScript -->
 						</select>
 					</div>
@@ -143,9 +145,8 @@
 					</button>
 				</form>
 			</section>
-			<span class="modal-message"></span>
 		</div>
-	</dialog>
+	</section>
 </body>
 
 </html>
