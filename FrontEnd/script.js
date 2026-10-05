@@ -129,8 +129,7 @@ const editMode = () => {
 
 // Recuperation du Token dans le LocalStorage
 const recupToken = () => {
-    const token = JSON.parse(localStorage.getItem("token"))
-    return token
+    return localStorage.getItem("token")
 }
 
 // Regarde si y a un token, si oui, ca passe la page en mode edition
@@ -202,20 +201,19 @@ boutonRetourModal.addEventListener("click", () => {
 const afficherGalleryModal = (works) => {
     works.forEach(work => {
         const figure = document.createElement("figure");
-        figure.id = `figureModal${work.id}`
+        figure.id = `figureModal${work.id}`;
         const img = document.createElement("img");
         img.src = work.imageUrl;
         img.alt = `Une image du projet : ${work.title}`;
         figure.appendChild(img);
 
         const trashBtn = document.createElement("button");
-        trashBtn.classList = "trash-btn"
+        trashBtn.classList = "trash-btn";
         trashBtn.setAttribute('work-id', work.id)
-        trashBtn.innerHTML = '<i class="fa-xs fa-solid fa-trash-can"></i>'
+        trashBtn.innerHTML = '<i class="fa-xs fa-solid fa-trash-can"></i>';
         figure.appendChild(trashBtn);
         galleryModal.appendChild(figure);
     });
-
 }
 
 //fonction qui valide la reponse de l'API
@@ -228,6 +226,14 @@ const validerResponse = (response) => {
 
 // Suppression du projet choisi
 const fetchDeleteWork = async (workId) => {
+    const work = allWorks.find((item) => item.id === Number(workId));
+    const title = work ? work.title : "";
+    const confirmation = confirm(
+        `Voulez-vous vraiment supprimer ce projet ${title}?`,
+    );
+    if (!confirmation) {
+        return;
+    }
     const token = recupToken()
     try {
         const response = await fetch(`${API}/works/${workId}`, {
@@ -238,7 +244,6 @@ const fetchDeleteWork = async (workId) => {
             },
         })
         validerResponse(response)
-        alert("Le projet a été supprimé de votre galerie !")
         await fetchGetWorks()
         fermerModal()
 
@@ -251,7 +256,7 @@ const fetchDeleteWork = async (workId) => {
 const ecouterDeleteBtn = () => {
     const allDeleteBtns = document.querySelectorAll(".trash-btn")
     allDeleteBtns.forEach(element => {
-        element.addEventListener("click", (event) => {
+        element.addEventListener("click", () => {
             fetchDeleteWork(element.getAttribute("work-id"))
         }
         )
@@ -381,6 +386,13 @@ form.addEventListener("submit", (event) => {
 //Demande a l'API d'ajouter un projet. Si le projet est bien ajouter, 
 //reinitialisation du form et gallery actualisée
 const fetchPostWork = async (data) => {
+    const title = data.get("title");
+    const confirmation = confirm(
+        `Voulez-vous vraiment ajouter ce projet ${title}?`,
+    );
+    if (!confirmation) {
+        return;
+    }
     const token = recupToken()
     try {
         const response = await fetch((`${API}/works`), {
@@ -389,7 +401,6 @@ const fetchPostWork = async (data) => {
             body: data
         })
         validerResponse(response)
-        alert("Le projet a bien été ajouté à votre galerie!")
         await fetchGetWorks()
         reinitialiserForm()
         fermerModal()

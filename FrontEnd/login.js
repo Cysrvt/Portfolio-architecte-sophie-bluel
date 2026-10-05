@@ -70,7 +70,7 @@ const fetchPostUser = async (loginUser) => {
 
         // il faut recuperer le Token 
         const token = rep.token;
-        window.localStorage.setItem("token", JSON.stringify(token));
+        window.localStorage.setItem("token", token);
 
         window.location.href = "index.html";
         // revenir sur la page d'accueil qui sera remise en page !
