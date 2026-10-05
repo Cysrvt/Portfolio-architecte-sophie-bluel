@@ -13,8 +13,10 @@ const fetchGetWorks = async () => {
         validerResponse(response);
         const works = await response.json();
         allWorks = works;
+
+        gallery.innerHTML = "";
+        galleryModal.innerHTML = "";
         afficherGallery(allWorks);
-        // pour la modale
         afficherGalleryModal(allWorks);
         ecouterDeleteBtn();
     } catch (error) {
@@ -206,7 +208,7 @@ const afficherGalleryModal = (works) => {
 
         const trashBtn = document.createElement("div");
         trashBtn.classList = "trash-btn"
-        trashBtn.setAttribute('data-id', work.id)
+        trashBtn.setAttribute('work-id', work.id)
         trashBtn.innerHTML = '<i class="fa-xs fa-solid fa-trash-can"></i>'
         figure.appendChild(trashBtn);
         galleryModal.appendChild(figure);
@@ -214,12 +216,6 @@ const afficherGalleryModal = (works) => {
 
 }
 
-// mise a jour des galeries avec supprission ou ajout d'un work
-const actualiserGaleries = () => {
-    gallery.innerHTML = "";
-    galleryModal.innerHTML = "";
-    fetchGetWorks();
-}
 
 // affiche un message dans le span en bas de la modale
 const afficheMessageModal = (message) => {
@@ -227,24 +223,16 @@ const afficheMessageModal = (message) => {
     modalMessage.innerText = message
 }
 
-//ecoute le container de la modale pour enlever le message du span
-modalContainer.addEventListener("click", (event) => {
-    const allTrashBtn = document.querySelectorAll(".trash-btn")
-    if (event.target != allTrashBtn) {
-        afficheMessageModal("")
-    }
-})
-
 //fonction qui valide la reponse de l'API
 const validerResponse = (response) => {
     if (!response.ok) {
-        afficheMessageModal("Une erreur est survenue")
+        alert("Une erreur est survenue")
         throw new Error("Probleme au niveau de la réponse de l'API")
     }
 }
 
 // Suppression du projet choisi
-const fetchDeleteWork = async (workId) => {
+const fetchDeleteWork = async (workId, figure) => {
     const token = recupToken()
     try {
         const response = await fetch(`${API}/works/${workId}`, {
@@ -255,8 +243,10 @@ const fetchDeleteWork = async (workId) => {
             },
         })
         validerResponse(response)
-        afficheMessageModal("Le projet a été supprimé de votre galerie !")
-        actualiserGaleries()
+        await fetchGetWorks()
+        alert("Le projet a été supprimé de votre galerie !")
+
+        fermerModal()
 
     } catch (error) {
         console.error("Erreur lorsqu'on essaye de supprimer les works");
@@ -267,8 +257,9 @@ const fetchDeleteWork = async (workId) => {
 const ecouterDeleteBtn = () => {
     const allDeleteBtns = document.querySelectorAll(".trash-btn")
     allDeleteBtns.forEach(element => {
-        element.addEventListener("click", () => {
-            fetchDeleteWork(element.getAttribute("workid"))
+        element.addEventListener("click", (event) => {
+            const figure = event.target.closest("figure")
+            fetchDeleteWork(element.getAttribute("work-id"), figure)
         }
         )
     }
@@ -389,7 +380,8 @@ const form = document.querySelector(".modal-form")
 form.addEventListener("submit", (event) => {
     event.preventDefault()
     if (verifierForm()) {
-        fetchPostWork(createFormData())
+        const formData = createFormData()
+        fetchPostWork(formData)
     }
 })
 
@@ -404,9 +396,10 @@ const fetchPostWork = async (data) => {
             body: data
         })
         validerResponse(response)
+        await fetchGetWorks()
         reinitialiserForm()
-        afficheMessageModal("Le projet a bien été ajouté à votre galerie!")
-        actualiserGaleries()
+        fermerModal()
+        alert("Le projet a bien été ajouté à votre galerie!")
 
     } catch (error) {
         console.error("Erreur dans le POST du work", error)

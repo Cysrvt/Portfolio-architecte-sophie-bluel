@@ -4,7 +4,9 @@ const form = document.querySelector(".form-login");
 const token = localStorage.getItem("token");
 
 if (token) {
-    window.location.href = "index.html";
+    window.location.replace("index.html");
+} else {
+    document.body.classList.add("open");
 }
 
 form.addEventListener("submit", (event) => {

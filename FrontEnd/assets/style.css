@@ -603,12 +603,20 @@ form button:disabled {
 
 .modal-message {
 	font-size: 20px;
-	color: #1D6154;
+	color: red;
 }
 
 
 
 /* LOGIN */
+
+.login-page {
+	visibility: hidden;
+}
+
+.login-page.open {
+	visibility: visible;
+}
 
 .login {
 	width: 380px;
