@@ -136,21 +136,28 @@ table {
 
 /** end reset css**/
 body {
-	max-width: 1140px;
-	margin: auto;
 	font-family: 'Work Sans';
 	font-size: 14px;
 	background-color: #FFFEF8;
 }
 
 main {
-	margin: 0 50px;
+	max-width: 1140px;
+	width: 100%;
+	padding: 0 50px;
+	box-sizing: border-box;
+	margin: auto;
 }
 
 header {
+	max-width: 1140px;
+	width: 100%;
 	display: flex;
 	justify-content: space-between;
-	margin: 50px 0
+	padding: 40px;
+
+	margin: auto;
+	box-sizing: border-box;
 }
 
 section {
@@ -171,7 +178,6 @@ h1>span {
 	font-family: 'Work Sans';
 	font-size: 10px;
 	letter-spacing: 0.1em;
-	;
 }
 
 h2 {
@@ -186,7 +192,6 @@ h2 {
 nav ul {
 	display: flex;
 	align-items: center;
-	list-style-type: none;
 	gap: 30px;
 
 }
@@ -344,7 +349,7 @@ form h2 {
 
 form input,
 form select {
-	font-family: Work Sans;
+	font-family: "Work Sans";
 	color: #444444;
 	height: 51px;
 	font-size: 14px;
@@ -396,28 +401,33 @@ form span {
 /* footer */
 footer {
 	background-color: #FFFFFF;
+	height: 60px;
+	width: 100%;
+	display: flex;
+	justify-content: center;
 }
 
-footer nav ul {
+footer nav {
 	display: flex;
 	justify-content: flex-end;
-	padding: 2em 0;
-	margin: 2em
+	max-width: 1140px;
+	width: 100%;
+	padding: 2em;
+	box-sizing: border-box;
 }
+
 
 /*   MODALE    */
 
 .modal {
 	position: fixed;
-	top: 0;
+	top: -60px;
 	left: 0;
 	width: 100%;
 	height: 100%;
 	background-color: rgba(0, 0, 0, 0.3);
-
 	justify-content: center;
 	align-items: center;
-
 	z-index: 1000;
 }
 
@@ -428,6 +438,7 @@ footer nav ul {
 	background-color: white;
 	border-radius: 10px;
 	padding: 20px;
+	box-sizing: border-box;
 	text-align: center;
 }
 
@@ -462,7 +473,7 @@ footer nav ul {
 
 .modal-title {
 	color: #000;
-	font-family: work sans;
+	font-family: "work sans";
 	font-weight: 400;
 	margin-top: 30px;
 	margin-bottom: 40px;
@@ -515,14 +526,6 @@ footer nav ul {
 	margin: 0;
 	cursor: pointer;
 }
-
-
-.modal-form {
-	display: flex;
-	flex-direction: column;
-
-}
-
 
 .add-photo-container {
 	background-color: #e8f1f6;
@@ -625,6 +628,7 @@ form button:disabled {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	width: 100%;
 }
 
 /* Utiliser en JS */

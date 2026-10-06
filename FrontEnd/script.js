@@ -357,6 +357,7 @@ const reinitialiserForm = () => {
     selectCategory.value = "";
     inputPhotoWork.value = "";
     photoPreview.src = "";
+    afficheErreurTaille("");
     changeClassOpen("js-add-photo", "js-preview-container");
     actualiserValiderBtn();
 };
