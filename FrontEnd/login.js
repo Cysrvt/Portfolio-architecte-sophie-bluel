@@ -38,7 +38,6 @@ const validerPassword = (password) => {
 };
 
 const afficherMessageError = (message) => {
-
     let spanError = document.getElementById("spanError");
     if (!spanError) {
         spanError = document.createElement("span");
@@ -63,22 +62,12 @@ const fetchPostUser = async (loginUser) => {
             headers: { "Content-Type": "application/json" },
             body: loginUserJSON
         });
-
         validerReponse(response);
-
         const rep = await response.json();
-
-        // il faut recuperer le Token 
         const token = rep.token;
         window.localStorage.setItem("token", token);
-
         window.location.href = "index.html";
-        // revenir sur la page d'accueil qui sera remise en page !
-
-
     } catch (error) {
-
         console.error("Erreur dans la recuperation", error);
     }
-
-}
+};
