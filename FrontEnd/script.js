@@ -19,6 +19,7 @@ const fetchGetWorks = async () => {
         afficherGalleryModal(allWorks);
         ecouterDeleteBtn();
     } catch (error) {
+        alert("Une erreur est survenue");
         console.error("Erreur dans la récupération de works", error);
     }
 };
@@ -58,6 +59,7 @@ const fetchGetCategories = async () => {
         ecouterFiltres();
     }
     catch (error) {
+        alert("Une erreur est survenue");
         console.error("Probleme de récupération des categories", error);
     }
 };
@@ -211,7 +213,6 @@ const afficherGalleryModal = (works) => {
 //fonction qui valide la reponse de l'API
 const validerResponse = (response) => {
     if (!response.ok) {
-        alert("Une erreur est survenue");
         throw new Error("Probleme au niveau de la réponse de l'API");
     }
 };
@@ -239,6 +240,7 @@ const fetchDeleteWork = async (workId) => {
         await fetchGetWorks();
         fermerModal();
     } catch (error) {
+        alert("Une erreur est survenue lors de la suppression du projet");
         console.error("Erreur lorsqu'on essaye de supprimer les works");
     }
 };
@@ -394,6 +396,7 @@ const fetchPostWork = async (data) => {
         reinitialiserForm();
         fermerModal();
     } catch (error) {
+        alert("Une erreur est survenue lors de l'ajout du projet");
         console.error("Erreur dans le POST du work", error);
     }
 };
